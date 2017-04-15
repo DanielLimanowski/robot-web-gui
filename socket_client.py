@@ -9,6 +9,8 @@ connect to the CPRE 288 Vortex Robot server
 import socket
 
 # establish a new socket for our client (the computer) to connect to the server (VORTEX Robot)
+# using the default parameters (family=AF_INET, type=SOCK_STREAM, protocol=0)
+print('Setting up the socket...')
 client = socket.socket()
 # hostname/ip address of the server
 host = '192.168.1.1'
@@ -16,7 +18,8 @@ host = '192.168.1.1'
 port = 42880
 
 # connect to the server using values defined above
-client.connect(host, port)
+print('Initializing the connection...')
+client.connect((host, port))
 
 print(client.recv(1024))
 
