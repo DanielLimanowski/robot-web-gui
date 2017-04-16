@@ -34,19 +34,11 @@ def disconnect_from_server(client):
 
 
 def send_command(client):
-    print('INFO: Sending request for command...')
+    print('INFO: Sending command...')
     response = ''
 
-    tries = 0
-    # keep receiving data from server until we receive an ACK (acknowledge to send command),
-    # DEN (deny, do not send command) or we have tried 50 times and failed
-    while tries < 1000:
-        # send a command request (repeated !) until server responds
-        client.sendall('!!!!!!!'.encode())
-        tries = tries + 1
-
-    #send a character other than ! to indicate done requesting command
-    client.sendall('*'.encode())
+    # send command string, max of 50 characters at the moment, including null terminating character
+    client.sendall("THIS IS A COMMAND TEST".encode())
 
     print('INFO: Attempting to get response now...')
     # set MSG_DONTWAIT flag so that the operation is non-blocking
@@ -59,28 +51,12 @@ def send_command(client):
     try:
         response = client.recv(4096)
         decoded_resp = response.decode('ascii')
-        print('SERVER: Response is: ' + decoded_resp)
+        print('SERVER: ' + decoded_resp)
     except:
         print('ERROR: Could not get response from server in time...')
 
     # return to blocking
     client.settimeout(None)
-
-    if decoded_resp == 'ACK':
-        print('INFO: Acknowledged request. Sending command...')
-        time.sleep(2)
-        command = 'this is a:: command$'
-        for c in command:
-            client.sendall(c.encode())
-            print('SENDING: ' + c)
-            time.sleep(0.1)
-
-        #client.sendall(b'this is a:: command!')
-        print('INFO: Command sent. Exiting.')
-    elif response == 'DEN':
-        print('INFO: Command request denied. Exiting.')
-    else:
-        print('ERROR: Server not responding to request. Exiting.')
 
     # the b in front of the message indicates that the sendall should send the message in byte-form
 
@@ -89,8 +65,11 @@ def send_command(client):
 
 rover = connect_to_server()
 
+# only need to send command once, and robot will receive it
 while 1:
     send_command(rover)
+    time.sleep(5)
+
 
 disconnect_from_server(rover)
 
