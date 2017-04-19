@@ -33,12 +33,14 @@ def disconnect_from_server(client):
     return
 
 
-def send_command(client):
+def send_command(client, command):
     print('INFO: Sending command...')
     response = ''
 
+    send_cmd = command + '\0'
+
     # send command string, max of 50 characters at the moment, including null terminating character
-    client.sendall("THIS IS A COMMAND TEST".encode())
+    client.sendall(send_cmd.encode())
 
     print('INFO: Attempting to get response now...')
     # set MSG_DONTWAIT flag so that the operation is non-blocking
@@ -67,8 +69,11 @@ rover = connect_to_server()
 
 # only need to send command once, and robot will receive it
 while 1:
-    send_command(rover)
-    time.sleep(5)
+    print('READY FOR COMMAND')
+    cmd = input()
+    print('SENDING COMMAND')
+    send_command(rover, cmd)
+    #time.sleep(5)
 
 
 disconnect_from_server(rover)
