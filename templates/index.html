@@ -54,21 +54,49 @@
     <div class="container-fluid bg-1 text-center">
         <h3>CONTROL CENTER</h3>
         <div class="row row-style">
-            <div class="col-md-8">
-                <div class="col-md-12 col-style">
-                    <p>test</p>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel_cmd">Select command:</label>
+                    <select class="form-control" id="sel_cmd">
+                        <option>Move</option>
+                        <option>Scan</option>
+                        <option>Sound</option>
+                    </select>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-md-12 col-style">
-                    <p>test</p>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="param1">Parameter 1:</label>
+                    <input type="text" class="form-control" id="param1">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="param2">Parameter 2:</label>
+                    <input type="text" class="form-control" id="param2">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="param3">Parameter 3:</label>
+                    <input type="text" class="form-control" id="param3">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <button type="button" class="btn btn-danger">Send Command</button>
                 </div>
             </div>
         </div>
         <div class="row row-style">
-            <div class="col-md-12">
+            <div class="col-md-7">
                 <div class="col-md-12 col-style">
-                    <p>test</p>
+                    <p>CONSOLE GOES HERE</p>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="col-md-12 col-style">
+                    <p>ANGULAR GRAPH GOES HERE</p>
                 </div>
             </div>
         </div>
