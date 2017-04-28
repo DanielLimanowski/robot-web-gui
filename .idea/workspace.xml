@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85858ae8-67e1-46cf-ae59-67378c9ab50f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/webgui-cpre288-final-project.iml" afterPath="$PROJECT_DIR$/.idea/webgui-cpre288-final-project.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/socket_client.py" afterPath="$PROJECT_DIR$/socket_client.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webgui-cpre288-final-project.py" afterPath="$PROJECT_DIR$/webgui-cpre288-final-project.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -487,7 +482,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493348598295</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Final changes before demo, messed with timing to make things quicker">
+      <created>1493406812709</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1493406812709</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -564,7 +566,8 @@
     <MESSAGE value="Continued development of index.html, including an HTML form for command input." />
     <MESSAGE value="Started to implement web sockets" />
     <MESSAGE value="Worked on web sockets, having issues with KeyError, pushing to test on another computer..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Worked on web sockets, having issues with KeyError, pushing to test on another computer..." />
+    <MESSAGE value="Final changes before demo, messed with timing to make things quicker" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final changes before demo, messed with timing to make things quicker" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
