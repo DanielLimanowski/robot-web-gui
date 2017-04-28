@@ -10,22 +10,22 @@ window.onload = function () {
 
 
     //specify correct server ip/url in WebSocket()
-    var web_socket = new WebSocket('ws://127.0.0.1:5000');
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     //error handling
-    web_socket.onerror = function(error) {
+    socket.onerror = function(error) {
         console.log('WEBSOCKET ERROR: ' + error);
     };
 
     //update status on page when we connect to the socket successfully
-    web_socket.onopen = function(event) {
+    socket.onopen = function(event) {
         status.innerHTML = 'Success! Connected to web socket.';
 
         //TODO: Implement in css
         status.className = 'socket_open';
     };
 
-    web_socket.onmessage = function(event) {
+    socket.onmessage = function(event) {
         var msg = event.data;
         //TODO: Implement received in css
         messages.innerHTML += '<li class="received"><span>Received:</span>' + msg + '</li>'

@@ -4,13 +4,17 @@
 <head>
     <title>Rover Command Center</title>
 
-    <!-- USING BOOTSTRAP VIA A CONTENT DELIVERY NETWORK (CDN)
+    <!-- USING BOOTSTRAP VIA A CONTENT DELIVERY NETWORK (CDN) -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- socket.io via CDN -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
@@ -45,6 +49,26 @@
 </style>
 
 <body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var socket = io.connect('http://127.0.0.1:5000');
+            socket.on('connect', function() {
+                socket.send('User connected.');
+            });
+
+            socket.on('message', function(msg) {
+               $("#message_list").append('<li>'+msg+'</li>');
+               console.log('Message received.');
+            });
+
+            $('#send_btn').on('click', function() {
+               socket.send($('#cmd_param').val());
+
+               //clear out current command to make room for a new one
+               $('#cmd_param').val(' ');
+            });
+        });
+    </script>
     <div class="container-fluid header-style">
         <div class="row row-style">
             <div class="col-md-8 text-left">
@@ -69,6 +93,7 @@
                                 <option>Turn</option>
                                 <option>Scan</option>
                                 <option>Sound</option>
+                                <option>Retrieve</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -76,6 +101,7 @@
                             <input type="text" class="form-control" id="cmd_param">
                         </div>
                         <button type="submit" class="btn btn-danger">Send Command</button>
+                        <button id="send_btn">SEND MSG</button>
                      </form>
                 </div>
             </div>
