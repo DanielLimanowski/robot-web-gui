@@ -50,7 +50,17 @@ def send_command(client, command):
     all at once. The following website inspired the code that follows:
     http://www.binarytides.com/receive-full-data-with-the-recv-socket-function-in-python/
     '''
-    timeout = 2
+    cmd_id = send_cmd[0]
+    if cmd_id == 's':
+        timeout = 18
+    elif cmd_id =='m':
+        timeout = 4
+    elif cmd_id == 't':
+        timeout = 3
+    elif cmd_id == 'b':
+        timeout = 2
+    else:
+        timeout = 5
     client.setblocking(0)
     total_data = []
     curr_data = ''
