@@ -41,38 +41,55 @@
     .header-style {
         font-family: 'Gloria Hallelujah', cursive;
     }
-    #socket_status {
-        color: #02ff00;
-        font-size: 15px;
-        font-weight: bold;
+    .console-style {
+        list-style-type: none;
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-bottom: 0px;
+        height: 400px;
+        overflow-y: scroll;
+    }
+    ul li:first-child {
+        color: red;
     }
 </style>
 
 <body>
     <script type="text/javascript">
-        $(document).ready(function () {
+        var isMove = 0;
+        $(document).ready(function() {
             var socket = io.connect('http://127.0.0.1:5000');
             socket.on('connect', function() {
-                socket.send('User connected.');
+                $("#ws_list").append('<li>' + 'User connected.' + '</li>');
+
             });
 
             socket.on('message', function(msg) {
-               $("#message_list").append('<li>'+msg+'</li>');
-               console.log('Message received.');
+                    $("#message_list").prepend('<li>' + msg + '</li>');
+                    console.log('Message received: ' + msg);
             });
 
             $('#send_btn').on('click', function() {
-               socket.send($('#cmd_param').val());
+                var cmd_selected = document.getElementById("cmd_sel");
+                var cmd_to_send = cmd_selected[cmd_selected.selectedIndex].value.toLowerCase().charAt(0);
+                if (cmd_to_send == 'm') {
+                    isMove = 1;
+                }
+                socket.send(cmd_to_send + ' ' + $('#cmd_param').val());
 
-               //clear out current command to make room for a new one
-               $('#cmd_param').val(' ');
+                //clear out current command to make room for a new one
+                $('#cmd_param').val(' ');
             });
+
         });
+
+        $("#message_list").scrollTop($("#message_list")[0].scrollHeight);
+
     </script>
     <div class="container-fluid header-style">
         <div class="row row-style">
             <div class="col-md-8 text-left">
-                <h1>CPRE 288 GUI</h1>
+                <h1>CPRE 288 GUI - ARMed and Ready</h1>
             </div>
             <div class="col-md-4 text-right">
                 <a style="font-size: 20pt" href="https://git.ece.iastate.edu/dlimanow/web-gui-cpre288" target="_blank">> REPO</a>
@@ -84,43 +101,41 @@
         <h3>CONTROL CENTER</h3>
         <div class="row row-style">
             <div class="col-md-10">
-                <div class="col-md-12 col-style">
-                    <form class="form-inline" id="cmd_form" action="#" method="post">
-                        <div class="form-group">
-                            <label for="sel_cmd">Select command:</label>
-                            <select class="form-control" id="cmd_sel">
-                                <option>Move</option>
-                                <option>Turn</option>
-                                <option>Scan</option>
-                                <option>Sound</option>
-                                <option>Retrieve</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="param">Command Parameter:</label>
-                            <input type="text" class="form-control" id="cmd_param">
-                        </div>
-                        <button type="submit" class="btn btn-danger">Send Command</button>
-                        <button id="send_btn">SEND MSG</button>
-                     </form>
+                <div class="col-md-12 col-style inline">
+                    <label for="sel_cmd">Select command:</label>
+                    <select class="form-control" id="cmd_sel">
+                        <option>Move</option>
+                        <option>Turn</option>
+                        <option>Scan</option>
+                        <option>Play Sound</option>
+                        <option>Flash Led</option>
+                    </select>
+
+                    <label for="param">Command Parameter:</label>
+                    <input type="text" class="form-control" id="cmd_param">
+
+                    <button type="submit" class="btn btn-danger" id="send_btn">Send Command</button>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="col-md-12 col-style">
-                    <div id=socket_status>"Connecting to web socket..."</div>
+                    <label for="ws_list">WEB SOCKET STATUS</label>
+                    <ul id="ws_list"></ul>
                 </div>
             </div>
         </div>
         <div class="row row-style">
             <div class="col-md-7">
                 <div class="col-md-12 col-style">
-                    <p>CONSOLE GOES HERE</p>
-                    <ul id="message_list"></ul>
+                    <label for="message_list">CONSOLE</label>
+                    <p>Newest messages appear first in the window.</p>
+                    <hr/>
+                    <ul id="message_list" class="console-style text-left"></ul>
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="col-md-12 col-style">
-                    <p>ANGULAR GRAPH GOES HERE</p>
+                    <p id="scan_info">ANGULAR GRAPH GOES HERE</p>
                 </div>
             </div>
         </div>

@@ -24,6 +24,7 @@ def connect_to_server():
     print('INFO: Initializing the connection...')
     client.connect((host, port))
 
+    print('INFO: Successfully connected to robot...')
     return client
 
 
@@ -34,7 +35,7 @@ def disconnect_from_server(client):
 
 
 def send_command(client, command):
-    print('INFO: Sending command...')
+    print('INFO: Sending command: ' + command)
     response = ''
 
     send_cmd = command + '\0'
@@ -46,25 +47,50 @@ def send_command(client, command):
     # set MSG_DONTWAIT flag so that the operation is non-blocking
     # ie., check for data and move on - don't wait to receive any
 
-    # make the socket non-blocking so that it doesn't wait for any operation
-    client.settimeout(10)
+    #http://www.binarytides.com/receive-full-data-with-the-recv-socket-function-in-python/
+    timeout = 2
+    client.setblocking(0)
+    total_data = []
+    curr_data = ''
 
-    decoded_resp = ''
-    try:
-        response = client.recv(4096)
-        decoded_resp = response.decode('ascii')
-        print('SERVER: ' + decoded_resp)
-    except:
-        print('ERROR: Could not get response from server in time...')
+    time_begin = time.time()
+
+    robot_msg = ''
+
+    while 1:
+        # if we have data fully received
+        if total_data and time.time()-time_begin > timeout:
+            robot_msg = 'ROBOT: ' + ''.join(total_data)
+            print('ROBOT: ' + ''.join(total_data))
+            break
+        # if we have NO data and ready to give up
+        elif time.time()-time_begin > timeout*2:
+            robot_msg = 'ROBOT - ERROR: Could not get response from server in time...'
+            print('ROBOT - ERROR: Could not get response from server in time...')
+            break
+
+        # try to receive some data
+        try:
+            response = client.recv(4096)
+            curr_data = response.decode('ascii')
+            if curr_data:
+                # then data has been received, add to array
+                total_data.append(curr_data)
+                time_begin = time.time()
+            else:
+                # wait a tiny bit before querying again
+                time.sleep(0.1)
+        except:
+            pass
 
     # return to blocking
     client.settimeout(None)
 
     # the b in front of the message indicates that the sendall should send the message in byte-form
 
-    return
+    return robot_msg
 
-
+'''
 rover = connect_to_server()
 
 # only need to send command once, and robot will receive it
@@ -78,3 +104,4 @@ while 1:
 
 disconnect_from_server(rover)
 
+'''
