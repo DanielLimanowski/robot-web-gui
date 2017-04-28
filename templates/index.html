@@ -3,7 +3,6 @@
 
 <head>
     <title>Rover Command Center</title>
-
     <!-- USING BOOTSTRAP VIA A CONTENT DELIVERY NETWORK (CDN) -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -11,19 +10,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <!-- socket.io via CDN -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-
-
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
 </head>
 
-<!--BOOTSTRAP STYLING -->
+<!--CSS STYLING -->
 <style>
     .bg-1 {
-        background-color: #1abc9c; /* Green */
+        background-color: #abbc70; /* Green */
         color: #ffffff;
     }
     .footer {
@@ -80,11 +76,7 @@
                 //clear out current command to make room for a new one
                 $('#cmd_param').val(' ');
             });
-
         });
-
-        $("#message_list").scrollTop($("#message_list")[0].scrollHeight);
-
     </script>
     <div class="container-fluid header-style">
         <div class="row row-style">
@@ -108,7 +100,7 @@
                         <option>Turn</option>
                         <option>Scan</option>
                         <option>Play Sound</option>
-                        <option>Flash Led</option>
+                        <option>Flash LED</option>
                     </select>
 
                     <label for="param">Command Parameter:</label>
@@ -135,7 +127,7 @@
             </div>
             <div class="col-md-5">
                 <div class="col-md-12 col-style">
-                    <p id="scan_info">ANGULAR GRAPH GOES HERE</p>
+                    <p id="scan_info">SCAN DATA</p>
                 </div>
             </div>
         </div>

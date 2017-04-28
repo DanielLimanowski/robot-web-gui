@@ -1,11 +1,9 @@
-from flask import Flask, render_template, request
-from flask_socketio import SocketIO, send, emit
 import eventlet
+from flask import Flask, render_template
+from flask_socketio import SocketIO, send
 
 eventlet.monkey_patch()
 import socket_client
-import time
-import numpy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'password'
@@ -61,6 +59,10 @@ if __name__ == '__main__':
     # socketio.run encapsulates the normal app.run() as it needs to in order to take
     # over the typical HTTP request model and replace it with socket communication
     socketio.run(app)  # SEE COMMENT ABOVE!!! , debug=True)
+
+'''
+Parses the data received from the scan command
+'''
 
 
 def parse_scan(data):

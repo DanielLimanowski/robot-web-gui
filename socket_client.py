@@ -1,4 +1,4 @@
-""""
+"""
 A python script to establish a client socket and 
 connect to the CPRE 288 Vortex Robot server
 
@@ -44,27 +44,28 @@ def send_command(client, command):
     client.sendall(send_cmd.encode())
 
     print('INFO: Attempting to get response now...')
-    # set MSG_DONTWAIT flag so that the operation is non-blocking
-    # ie., check for data and move on - don't wait to receive any
 
-    #http://www.binarytides.com/receive-full-data-with-the-recv-socket-function-in-python/
+    '''
+    Since some commands like scan take awhile, there was a need for data collection over a period of time, not
+    all at once. The following website inspired the code that follows:
+    http://www.binarytides.com/receive-full-data-with-the-recv-socket-function-in-python/
+    '''
     timeout = 2
     client.setblocking(0)
     total_data = []
     curr_data = ''
-
-    time_begin = time.time()
-
     robot_msg = ''
 
+    time_begin = time.time()
     while 1:
         # if we have data fully received
-        if total_data and time.time()-time_begin > timeout:
+        if total_data and time.time() - time_begin > timeout:
+            # Combine all the chunked array data into one string
             robot_msg = 'ROBOT: ' + ''.join(total_data)
             print('ROBOT: ' + ''.join(total_data))
             break
         # if we have NO data and ready to give up
-        elif time.time()-time_begin > timeout*2:
+        elif time.time() - time_begin > timeout * 2:
             robot_msg = 'ROBOT - ERROR: Could not get response from server in time...'
             print('ROBOT - ERROR: Could not get response from server in time...')
             break
@@ -86,14 +87,12 @@ def send_command(client, command):
     # return to blocking
     client.settimeout(None)
 
-    # the b in front of the message indicates that the sendall should send the message in byte-form
-
     return robot_msg
 
+# Uncomment the code below to test commands using only this file (WITHOUT the flask app)
 '''
 rover = connect_to_server()
 
-# only need to send command once, and robot will receive it
 while 1:
     print('READY FOR COMMAND')
     cmd = input()
@@ -101,7 +100,5 @@ while 1:
     send_command(rover, cmd)
     #time.sleep(5)
 
-
 disconnect_from_server(rover)
-
 '''
